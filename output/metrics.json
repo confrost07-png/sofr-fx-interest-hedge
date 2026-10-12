@@ -1,0 +1,350 @@
+{
+  "period": {
+    "start_month": "2020-01",
+    "end_month": "2025-12"
+  },
+  "assumptions": {
+    "principal_usd": 1000000,
+    "spread": 0.02
+  },
+  "counts": {
+    "endpoints": 73,
+    "periods": 72,
+    "changes": 71,
+    "daily_common_2020_2025": 1493
+  },
+  "corr_level": 0.8011,
+  "corr_change": -0.0517,
+  "n_level": 72,
+  "n_change": 71,
+  "fx_dominant_months": 44,
+  "rate_dominant_months": 27,
+  "sum_abs_contrib_rate_krw": 9723189.0,
+  "sum_abs_contrib_fx_krw": 7995928.0,
+  "max_decomp_residual": 2.2519088815897703e-09,
+  "definitions": {
+    "sofr_comp": "(SOFRINDEX_end/SOFRINDEX_start - 1) * 360 / actual days",
+    "fx_logret": "ln(USDKRW_end / USDKRW_prev_end)",
+    "corr_level": "corr(sofr_comp, usdkrw_end)",
+    "corr_change": "corr(diff(sofr_comp), fx_logret) same month",
+    "cost_30d_krw": "principal * (sofr_comp + spread) / 12 * usdkrw_end",
+    "contrib": "symmetric decomposition, contrib_rate + contrib_fx = d_cost"
+  },
+  "sources": {
+    "SOFRINDEX": "https://fred.stlouisfed.org/series/SOFRINDEX",
+    "DEXKOUS": "https://fred.stlouisfed.org/series/DEXKOUS"
+  },
+  "generated_at": "2026-10-02T04:13:17",
+  "version": "v1.2",
+  "auxiliary_function": "analysis_core.compute_auxiliary",
+  "auxiliary": {
+    "subperiod_corr": {
+      "2020_2022": {
+        "start": "2020-01",
+        "end": "2022-12",
+        "corr_level": 0.7448,
+        "n_level": 36,
+        "corr_change": -0.0598,
+        "n_change": 35
+      },
+      "2023_2025": {
+        "start": "2023-01",
+        "end": "2025-12",
+        "corr_level": -0.5552,
+        "n_level": 36,
+        "corr_change": -0.024,
+        "n_change": 36
+      },
+      "excl_2020_03": {
+        "corr_change": -0.0572,
+        "n_change": 70
+      },
+      "definition": "full monthly table sliced by month; d_sofr of first month uses previous month (2023-01 uses 2022-12)"
+    },
+    "regime_contrib": {
+      "regimes": {
+        "low": {
+          "name": "저금리기",
+          "start": "2020-01",
+          "end": "2022-02",
+          "months": 26,
+          "change_months": 25,
+          "net_contrib_rate_krw": -1510992.0,
+          "net_contrib_fx_krw": 44438.0,
+          "net_d_cost_krw": -1466554.0,
+          "avg_cost_30d_krw": 2138523.0
+        },
+        "hiking": {
+          "name": "인상기",
+          "start": "2022-03",
+          "end": "2023-07",
+          "months": 17,
+          "change_months": 17,
+          "net_contrib_rate_krw": 5545897.0,
+          "net_contrib_fx_krw": -60649.0,
+          "net_d_cost_krw": 5485248.0,
+          "avg_cost_30d_krw": 5577927.0
+        },
+        "hold": {
+          "name": "고금리 유지기",
+          "start": "2023-08",
+          "end": "2024-08",
+          "months": 13,
+          "change_months": 13,
+          "net_contrib_rate_krw": 266202.0,
+          "net_contrib_fx_krw": 374109.0,
+          "net_d_cost_krw": 640310.0,
+          "avg_cost_30d_krw": 8208217.0
+        },
+        "cutting": {
+          "name": "인하기",
+          "start": "2024-09",
+          "end": "2025-12",
+          "months": 16,
+          "change_months": 16,
+          "net_contrib_rate_krw": -1789209.0,
+          "net_contrib_fx_krw": 613874.0,
+          "net_d_cost_krw": -1175335.0,
+          "avg_cost_30d_krw": 7530602.0
+        }
+      },
+      "total": {
+        "net_contrib_rate_krw": 2511898.0,
+        "net_contrib_fx_krw": 971772.0,
+        "net_d_cost_krw": 3483669.0,
+        "cost_first_krw": 3520092.0,
+        "cost_last_krw": 7003762.0,
+        "rate_share": 0.721,
+        "cutting_fx_offset_ratio": 0.3431
+      },
+      "definition": "sum of monthly contributions by month in regime; low regime starts at 2020-02 (first change month)"
+    },
+    "top3_contrib": {
+      "rate": [
+        {
+          "rank": 1,
+          "month": "2020-03",
+          "contrib_rate_krw": -889056.0,
+          "contrib_fx_krw": 10493.0,
+          "d_cost_krw": -878563.0
+        },
+        {
+          "rank": 2,
+          "month": "2022-08",
+          "contrib_rate_krw": 799050.0,
+          "contrib_fx_krw": 129293.0,
+          "d_cost_krw": 928343.0
+        },
+        {
+          "rank": 3,
+          "month": "2022-11",
+          "contrib_rate_krw": 787882.0,
+          "contrib_fx_krw": -483169.0,
+          "d_cost_krw": 304713.0
+        }
+      ],
+      "fx": [
+        {
+          "rank": 1,
+          "month": "2023-02",
+          "contrib_rate_krw": 244717.0,
+          "contrib_fx_krw": 489959.0,
+          "d_cost_krw": 734676.0
+        },
+        {
+          "rank": 2,
+          "month": "2022-11",
+          "contrib_rate_krw": 787882.0,
+          "contrib_fx_krw": -483169.0,
+          "d_cost_krw": 304713.0
+        },
+        {
+          "rank": 3,
+          "month": "2024-12",
+          "contrib_rate_krw": -152807.0,
+          "contrib_fx_krw": 444541.0,
+          "d_cost_krw": 291734.0
+        }
+      ],
+      "definition": "ranked by absolute monthly contribution, 71 change months"
+    },
+    "data_provenance": {
+      "fred_download_date": "2026-10-02",
+      "method": "manual",
+      "files": {
+        "SOFRINDEX": {
+          "path": "raw/sofrindex_fred.csv",
+          "sha256": "5d94d7626db12dd3f9302b64fb5b76e322e7f28de6458e3882be11ef1931a1d0",
+          "rows": 1588,
+          "first_date": "2019-12-02",
+          "last_date": "2025-12-31",
+          "file_modified_in_runtime": "2026-10-02 04:59"
+        },
+        "DEXKOUS": {
+          "path": "raw/dexkous_fred.csv",
+          "sha256": "64f65fe1c9003dacebc4ea0d09dff2d70b259af967ae4755f7d2f130a62bf7cd",
+          "rows": 1588,
+          "first_date": "2019-12-02",
+          "last_date": "2025-12-31",
+          "file_modified_in_runtime": "2026-10-02 04:59"
+        }
+      }
+    },
+    "concentration": {
+      "rate": {
+        "top10_share": 0.6077,
+        "median_abs_krw": 26596.0,
+        "median_signed_krw": 4846.0
+      },
+      "fx": {
+        "top10_share": 0.4495,
+        "median_abs_krw": 55824.0,
+        "median_signed_krw": 6237.0
+      },
+      "definition": "top10_share = sum of 10 largest |contrib| / sum |contrib| (71 months); median of |contrib|"
+    },
+    "yearly_dominance": {
+      "2020": {
+        "rate": 4,
+        "fx": 7,
+        "tie": 0
+      },
+      "2021": {
+        "rate": 2,
+        "fx": 10,
+        "tie": 0
+      },
+      "2022": {
+        "rate": 9,
+        "fx": 3,
+        "tie": 0
+      },
+      "2023": {
+        "rate": 5,
+        "fx": 7,
+        "tie": 0
+      },
+      "2024": {
+        "rate": 3,
+        "fx": 9,
+        "tie": 0
+      },
+      "2025": {
+        "rate": 4,
+        "fx": 8,
+        "tie": 0
+      }
+    },
+    "scatter_clusters": {
+      "low_sofr_lt_0.5pct": {
+        "months": 25,
+        "first": "2020-04",
+        "last": "2022-04",
+        "contiguous": true,
+        "fx_min": 1086.11,
+        "fx_max": 1255.87,
+        "corr_level": 0.4516
+      },
+      "high_sofr_ge_3pct": {
+        "months": 39,
+        "first": "2022-10",
+        "last": "2025-12",
+        "contiguous": true,
+        "fx_min": 1231.95,
+        "fx_max": 1477.86,
+        "corr_level": -0.4019
+      },
+      "between_months": [
+        "2020-01",
+        "2020-02",
+        "2020-03",
+        "2022-05",
+        "2022-06",
+        "2022-07",
+        "2022-08",
+        "2022-09"
+      ]
+    },
+    "sensitivity_2025_12": {
+      "sofr_comp": 0.038181,
+      "usdkrw": 1444.55,
+      "base_krw": 7003762,
+      "sofr_plus_1pp_krw": 8207553,
+      "fx_plus_10pct_krw": 7704138,
+      "both_krw": 9028309,
+      "cross_term_krw": 120379
+    },
+    "regime_levels": {
+      "low": {
+        "sofr_mean_pct": 0.1956,
+        "sofr_first_pct": 1.5458,
+        "sofr_last_pct": 0.0496,
+        "sofr_min_pct": 0.01,
+        "sofr_min_month": "2021-04",
+        "sofr_max_pct": 1.5863,
+        "sofr_max_month": "2020-02",
+        "fx_min": 1086.11,
+        "fx_min_month": "2020-12",
+        "fx_max": 1236.61,
+        "fx_max_month": "2020-05",
+        "avg_cost_30d_krw": 2138522.8857
+      },
+      "hiking": {
+        "sofr_mean_pct": 3.1085,
+        "sofr_first_pct": 0.1558,
+        "sofr_last_pct": 5.1017,
+        "sofr_min_pct": 0.1558,
+        "sofr_min_month": "2022-03",
+        "sofr_max_pct": 5.1017,
+        "sofr_max_month": "2023-07",
+        "fx_min": 1211.55,
+        "fx_min_month": "2022-03",
+        "fx_max": 1431.67,
+        "fx_max_month": "2022-09",
+        "avg_cost_30d_krw": 5577926.9223
+      },
+      "hold": {
+        "sofr_mean_pct": 5.3302,
+        "sofr_first_pct": 5.3121,
+        "sofr_last_pct": 5.3465,
+        "sofr_min_pct": 5.3121,
+        "sofr_min_month": "2023-08",
+        "sofr_max_pct": 5.3514,
+        "sofr_max_month": "2024-07",
+        "fx_min": 1289.95,
+        "fx_min_month": "2023-11",
+        "fx_max": 1385.43,
+        "fx_max_month": "2024-05",
+        "avg_cost_30d_krw": 8208217.1064
+      },
+      "cutting": {
+        "sofr_mean_pct": 4.3904,
+        "sofr_first_pct": 5.1691,
+        "sofr_last_pct": 3.8181,
+        "sofr_min_pct": 3.8181,
+        "sofr_min_month": "2025-12",
+        "sofr_max_pct": 5.1691,
+        "sofr_max_month": "2024-09",
+        "fx_min": 1314.94,
+        "fx_min_month": "2024-09",
+        "fx_max": 1477.86,
+        "fx_max_month": "2024-12",
+        "avg_cost_30d_krw": 7530601.8115
+      }
+    },
+    "data_checks": {
+      "raw_missing_sofrindex": 69,
+      "raw_missing_dexkous": 68,
+      "common_days_all": 1514,
+      "common_days_2020_2025": 1493,
+      "d_sofr_2020_03_pp": -0.8767
+    }
+  },
+  "changelog": [
+    {
+      "version": "v1.2",
+      "date": "2026-10-02",
+      "change": "auxiliary verification of remaining report figures added (concentration, yearly dominance, scatter clusters, sensitivity, regime levels, data checks); auxiliary functions added to analysis_core.py (compute_auxiliary); core values unchanged"
+    }
+  ]
+}
